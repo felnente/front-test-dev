@@ -14,20 +14,14 @@ export default new Router({
         },
 
         {
-            path: "/galaxy/create",
-            name: "galaxy-create",
-            component: () => import("./components/AddGalaxy")
+            path: "/contact/create",
+            name: "contact-create",
+            component: () => import("./components/ContactCreate")
         },
         {
-            path: "/galaxy/:id",
-            name: "galaxy",
-            component: () => import("./components/Galaxy")
-        },
-        {
-            path: "/planet/create",
-            name: "planet-create",
-            component: () => import("./components/AddPlanet")
+            path: "/contact/edit/:id",
+            name: "contact-edit",
+            component: () => import("./components/ContactEdit")
         }
-
     ]
 });

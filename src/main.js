@@ -4,13 +4,21 @@ import router from './router'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-free/css/all.css'
+import VueTheMask from 'vue-the-mask'
+import { mask } from 'vue-the-mask'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'vue2-datepicker/index.css'
+import 'vue2-datepicker/locale/pt-br'
 
 Vue.config.productionTip = false
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.directive('mask', mask)
+
+
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.use(VueTheMask)
 
 new Vue({
     router,
