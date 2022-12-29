@@ -12,14 +12,14 @@
     </router-link>
     <div class="tab-content" id="pills-tabContent">
       <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
-        <table class="table table-striped">
+        <table class="table table-striped contacts-table">
           <thead>
           <tr>
             <th>Nome</th>
             <th>E-mail</th>
             <th>CPF</th>
             <th>Aniversário</th>
-            <th width="120px">Editar</th>
+            <th width="120px">Açoes</th>
           </tr>
           </thead>
           <tbody>
@@ -30,8 +30,13 @@
             <td>{{contact.birth}}</td>
             <td>
               <router-link :to="{ path: '/contact/edit/'+ contact.id}" class="nav-link btn-create">
+                <button class="btn btn-warning">
+                  <i class="fa-solid fa-location-dot"></i>
+                </button>
+              </router-link>
+              <router-link :to="{ path: '/contact/edit/'+ contact.id}" class="nav-link btn-create">
                 <button class="btn btn-primary">
-                    <i class="fa-solid fa-user-pen"></i>
+                  <i class="fa-solid fa-user-pen"></i>                    
                 </button>
               </router-link>
             </td>
@@ -90,4 +95,10 @@ export default {
     .btn-create {
         float: right
     }
+
+    .contacts-table 
+      a {
+        padding: 0    
+      }
+    
 </style>

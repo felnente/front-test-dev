@@ -22,6 +22,11 @@ export default new Router({
             path: "/contact/edit/:id",
             name: "contact-edit",
             component: () => import("./components/ContactEdit")
+        },
+        {
+            path: "/contact/addresses",
+            name: "contact-addresses",
+            component: () => import("./components/ContactEdit")
         }
     ]
 });
