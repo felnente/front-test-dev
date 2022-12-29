@@ -52,7 +52,10 @@
             </div>
             
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">{{ contact.hasOwnProperty('id') ? 'Editar' : 'Cadastrar' }}</button>        
+              <button 
+                type="submit"
+                class="btn btn-primary">{{ contact.hasOwnProperty('id') ? 'Editar' : 'Cadastrar' }}
+              </button>        
             </div>   
         </div>
       </form>
@@ -144,15 +147,14 @@
             <div class="col-md-4 col-lg-4">        
               <div class="form-group">
                 <label class="form-group" for="state">Estado</label>
-                <input 
-                  class="form-control" 
-                  type="text" 
+                <v-select 
+                  :reduce="state => state.id" 
+                  label="name" 
                   v-model="address.state" 
-                  placeholder="N°" 
-                  name="state" 
-                  id="state"
+                  :options="states"
                   :disabled="loadCep"
-                >
+                >                  
+                </v-select>
                 <span class="text-danger">{{ errors.hasOwnProperty('state') ? errors.state[0] : '' }}</span>
               </div>
             </div>
@@ -161,6 +163,7 @@
           <div class="form-group">
             <button type="submit" class="btn btn-primary">Cadastrar</button>        
           </div> 
+          
         </form>
 
         <br>
@@ -179,7 +182,7 @@
               </tr>
             </thead>
             <tbody>
-            <tr v-for="addre in contact.address" :key="addre.id">
+            <tr v-for="addre in addresses" :key="addre.id">
               <td>{{addre.cep}}</td>
               <td>{{addre.street}}</td>
               <td>{{addre.number}}</td>
@@ -217,17 +220,48 @@
 
     data () {
       return {
+        addresses: null,
         birth: '',
         address: {},
         errors: {},
         searchTimeout: null,
-        loadCep: true
+        loadCep: true,
+        states: [
+          {id: 'AC', name: 'Acre'},
+          {id: 'AP', name: 'Amapá'},
+          {id: 'AL', name: 'Alagoas'},
+          {id: 'AM', name: 'Amazonas'},
+          {id: 'CE', name: 'Ceara'},
+          {id: 'BA', name: 'Bahia'},	
+          {id: 'DF', name: 'Distrito Federal'},
+          {id: 'ES', name: 'Espírito Santo'},	
+          {id: 'GO', name: 'Goiás'},	
+          {id: 'MA', name: 'Maranhão'},	
+          {id: 'MT', name: 'Mato Grosso'},	
+          {id: 'MS', name: 'Mato Grosso do Sul'},	
+          {id: 'MG', name: 'Minas Gerais'},	
+          {id: 'PA', name: 'Pará'},	
+          {id: 'PB', name: 'Paraíba'},	
+          {id: 'PR', name: 'Paraná'},	
+          {id: 'PE', name: 'Pernambuco'},	
+          {id: 'PI', name: 'Piauí'},	
+          {id: 'RJ', name: 'Rio de Janeiro'},	
+          {id: 'RN', name: 'Rio Grande do Norte'},	
+          {id: 'RS', name: 'Rio Grande do Sul'},	
+          {id: 'RO', name: 'Rondônia'},	
+          {id: 'RR', name: 'Roraima'},	
+          {id: 'SC', name: 'Santa Catarina'},	
+          {id: 'SP', name: 'São Paulo'},	
+          {id: 'SE', name: 'Sergipe'},	
+          {id: 'TO', name: 'Tocantins'}
+        ]
       }
     },
 
     mounted () {
       if (Object.prototype.hasOwnProperty.call(this.contact, 'id')) {
         this.birth = new Date(this.contact.birth + ' 12:00:00')
+        this.addresses = this.contact.address
       }      
     },
 
@@ -272,7 +306,7 @@
         this.address.contact_id = this.contact.id
         axios.post('http://localhost:3000/addresses', this.address)
           .then(() => {
-            this.loadContact()
+            this.loadContactAddresses()
             this.address = {}
           })
           .catch((error) => {
@@ -284,14 +318,15 @@
         console.log('aaaa')
         axios.delete('http://localhost:3000/addresses/' + id)
           .then(() => {
-            this.loadContact()
+            this.loadContactAddresses()
           })
       },
-      loadContact () {
+      loadContactAddresses () {
         axios.get('http://localhost:3000/contacts/' + this.contact.id)
           .then((response) => {
-            this.contact = response.data
+            this.addresses = response.data.address
           })
+          this.loadCep = true
       },
       searchZipCode () {
         clearTimeout(this.searchTimeout)
