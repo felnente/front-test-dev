@@ -12,6 +12,8 @@ import 'vue2-datepicker/index.css'
 import 'vue2-datepicker/locale/pt-br'
 import $ from 'jquery'
 import Pagination from 'vue-pagination-2'
+import vSelect from "vue-select"
+import "vue-select/dist/vue-select.css"
 
 window.jQuery = $
 window.$ = $
@@ -25,6 +27,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueTheMask)
 Vue.component('pagination', Pagination)
+Vue.component("v-select", vSelect)
 
 new Vue({
     router,

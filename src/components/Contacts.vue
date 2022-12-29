@@ -1,5 +1,9 @@
 <template>
   <div class="container-fluid">
+    <div class="panel-heading">
+      <h3 class="panel-title">Lista de contatos</h3>
+    </div>
+    <br>
     <form class="row search">
       <div class="form-group col-md-12">
         <input class="form-control" v-on:keyup="filter" id="search" v-model="name" ref="search" placeholder="Busca"/>
@@ -56,7 +60,7 @@ export default {
         name: '',
         page: 1,
         searchTimeout: null,
-        totalItems: null
+        totalItems: 0
     }
   },
 
