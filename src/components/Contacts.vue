@@ -19,7 +19,7 @@
             <th>E-mail</th>
             <th>CPF</th>
             <th>Aniversário</th>
-            <th width="120px">Açoes</th>
+            <th width="120px">Editar/Endereços</th>
           </tr>
           </thead>
           <tbody>
@@ -30,11 +30,6 @@
             <td>{{contact.birth}}</td>
             <td>
               <router-link :to="{ path: '/contact/edit/'+ contact.id}" class="nav-link btn-create">
-                <button class="btn btn-warning">
-                  <i class="fa-solid fa-location-dot"></i>
-                </button>
-              </router-link>
-              <router-link :to="{ path: '/contact/edit/'+ contact.id}" class="nav-link btn-create">
                 <button class="btn btn-primary">
                   <i class="fa-solid fa-user-pen"></i>                    
                 </button>
@@ -43,6 +38,8 @@
           </tr>
           </tbody>
           </table>
+
+          <pagination v-model="page" :records="totalItems" @paginate="load" :per-page="20"></pagination>
       </div>
     </div>
   </div>
@@ -57,18 +54,25 @@ export default {
     return {
         contacts: {},
         name: '',
-        searchTimeout: null
+        page: 1,
+        searchTimeout: null,
+        totalItems: null
     }
   },
+
+  components: {
+  },
+
   mounted (){
     this.load()
   },
 
   methods: {
     load () {
-      axios.get('http://localhost:3000/contacts?name=' + this.name)
+      axios.get('http://localhost:3000/contacts?name=' + this.name + '&page=' + this.page)
       .then((response) => {
         this.contacts = response.data.contacts
+        this.totalItems = response.data.meta.totalItems
       })
     },
 
@@ -77,16 +81,7 @@ export default {
       this.searchTimeout = setTimeout(() => {
         this.load()        
       }, 1000);
-    },
-
-      onPostClick(id) {
-          this.$router.push({
-              name: 'galaxy',
-              params: {
-                  id
-              }
-          });
-      }
+    }
   }
 }
 </script>
