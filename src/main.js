@@ -10,6 +10,11 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue2-datepicker/index.css'
 import 'vue2-datepicker/locale/pt-br'
+import $ from 'jquery'
+import Pagination from 'vue-pagination-2'
+
+window.jQuery = $
+window.$ = $
 
 Vue.config.productionTip = false
 
@@ -19,6 +24,7 @@ Vue.directive('mask', mask)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueTheMask)
+Vue.component('pagination', Pagination)
 
 new Vue({
     router,

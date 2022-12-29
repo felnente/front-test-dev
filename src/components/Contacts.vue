@@ -12,14 +12,14 @@
     </router-link>
     <div class="tab-content" id="pills-tabContent">
       <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
-        <table class="table table-striped">
+        <table class="table table-striped contacts-table">
           <thead>
           <tr>
             <th>Nome</th>
             <th>E-mail</th>
             <th>CPF</th>
             <th>Aniversário</th>
-            <th width="120px">Editar</th>
+            <th width="120px">Editar/Endereços</th>
           </tr>
           </thead>
           <tbody>
@@ -31,13 +31,15 @@
             <td>
               <router-link :to="{ path: '/contact/edit/'+ contact.id}" class="nav-link btn-create">
                 <button class="btn btn-primary">
-                    <i class="fa-solid fa-user-pen"></i>
+                  <i class="fa-solid fa-user-pen"></i>                    
                 </button>
               </router-link>
             </td>
           </tr>
           </tbody>
           </table>
+
+          <pagination v-model="page" :records="totalItems" @paginate="load" :per-page="20"></pagination>
       </div>
     </div>
   </div>
@@ -52,18 +54,25 @@ export default {
     return {
         contacts: {},
         name: '',
-        searchTimeout: null
+        page: 1,
+        searchTimeout: null,
+        totalItems: null
     }
   },
+
+  components: {
+  },
+
   mounted (){
     this.load()
   },
 
   methods: {
     load () {
-      axios.get('http://localhost:3000/contacts?name=' + this.name)
+      axios.get('http://localhost:3000/contacts?name=' + this.name + '&page=' + this.page)
       .then((response) => {
         this.contacts = response.data.contacts
+        this.totalItems = response.data.meta.totalItems
       })
     },
 
@@ -72,16 +81,7 @@ export default {
       this.searchTimeout = setTimeout(() => {
         this.load()        
       }, 1000);
-    },
-
-      onPostClick(id) {
-          this.$router.push({
-              name: 'galaxy',
-              params: {
-                  id
-              }
-          });
-      }
+    }
   }
 }
 </script>
@@ -90,4 +90,10 @@ export default {
     .btn-create {
         float: right
     }
+
+    .contacts-table 
+      a {
+        padding: 0    
+      }
+    
 </style>
