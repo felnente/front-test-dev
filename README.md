@@ -1,4 +1,8 @@
-# Frontend Leadster test
+# Frontend - Teste Leadster 
+
+Projeto frontend para consumir API de cadastro de contatos.
+
+Projeto backend da API: https://github.com/felnente/test-dev
 
 ## Dependências
 - nodejs v12.13.0
